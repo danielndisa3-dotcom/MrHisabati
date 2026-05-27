@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ndisa</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-inner">
+        <h1>MrHisabati</h1>
+        <a class="button" href="#features">Get Started</a>
+      </div>
+    </header>
+
+    <section id="register" class="section container">
+      <div class="card">
+        <h2>Create an account</h2>
+        <form id="register-form">
+          <label for="email">Email</label>
+          <input id="email" type="email" name="email" required placeholder="you@example.com" />
+
+          <label for="password">Password</label>
+          <input id="password" type="password" name="password" required placeholder="Enter your password" />
+
+          <button type="submit" class="button">Register</button>
+          <p id="register-message" class="message"></p>
+        </form>
+      </div>
+    </section>
+
+    <main>
+      <section id="features" class="section container">
+        <h2>Why ndisa paper?</h2>
+        <div class="grid">
+          <article>
+            <h3>Build Questions Quickly</h3>
+            <p>Compose multiple choice, matching items,short answer   ikm  , and written response questions with structured formatting.</p>
+          </article>
+          <article>
+            <h3>Organize by Topic</h3>
+            <p>Group questions into subjects, sections, and difficulty levels to manage large assessments.</p>
+          </article>
+          <article>
+            <h3>Export & Share</h3>
+            <p>Save exams as printable documents or share them with students and colleagues easily.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section red">
+        <div class="container split">
+          <div>
+            <h2>How it works</h2>
+            <ol>
+              <li>Choose a subject and exam type.</li>
+              <li>Add questions with point values and instructions.</li>
+              <li>Review, export, and publish your exam.</li>
+            </ol>
+          </div>
+          <div>
+            <h2>Features</h2>
+            <ul>
+              <li>Section-based exam layout</li>
+              <li>Question bank support</li>
+              <li>Automatic scoring guidance</li>
+              <li>Responsive interface for mobile devices</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="payment" class="section container">
+        <div class="card">
+          <h2>Mobile Payment</h2>
+          <p>Pay quickly using your mobile money account. Enter your phone number and select your provider to complete the payment.</p>
+          <p><strong>Receiver:</strong> DANIEL NDISA</p>
+          <p><strong>Account:</strong> NBC Bank Account Number 045174021837</p>
+          <form id="payment-form">
+            <label for="phone">Phone number</label>
+            <input id="phone" type="tel" name="phone" required placeholder="255744873006" />
+
+            <label for="provider">Provider</label>
+            <select id="provider" name="provider" required>
+              <option value="" disabled selected>Select provider</option>
+              <option value="mpesa">M-Pesa</option>
+              <option value="airtel">Airtel Money</option>
+            </select>
+
+            <button type="submit" class="button">Pay</button>
+            <p id="payment-message" class="message"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="card">
+          <h2>Ready to compose your next exam?</h2>
+          <p>Use this website as the starting point for your exam composer project. Replace the content with your own form, question editor, and export tools.</p>
+          <a class="button secondary" href="#top">Back to top</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>MrHisabati � a simple website starter for exam creation and management.</p>
+      </div>
+    </footer>
+
+    <script>
+      const registerForm = document.getElementById('register-form');
+      const registerMessage = document.getElementById('register-message');
+      const paymentForm = document.getElementById('payment-form');
+      const paymentMessage = document.getElementById('payment-message');
+      const phoneInput = document.getElementById('phone');
+      const providerSelect = document.getElementById('provider');
+      let autoPaymentTimer;
+
+      registerForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(registerForm);
+        const email = formData.get('email').trim();
+        const password = formData.get('password').trim();
+
+        if (!email || !password) {
+          registerMessage.textContent = 'Please enter both email and password.';
+          return;
+        }
+
+        registerMessage.textContent = `Registration requested for ${email}.`;
+      });
+
+      function submitPayment() {
+        const phone = phoneInput.value.trim();
+        const provider = providerSelect.value;
+
+        if (!phone || !provider) {
+          return;
+        }
+
+        paymentMessage.textContent = `Mobile payment initiated for ${phone} via ${provider}. Send the funds to NBC Bank Account Number 045174021837.`;
+      }
+
+      function scheduleAutoPayment() {
+        clearTimeout(autoPaymentTimer);
+        autoPaymentTimer = setTimeout(() => {
+          if (phoneInput.value.trim() && providerSelect.value) {
+            paymentForm.requestSubmit();
+          }
+        }, 400);
+      } 
+
+      phoneInput.addEventListener('input', scheduleAutoPayment);
+      providerSelect.addEventListener('change', scheduleAutoPayment);
+
+      paymentForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const phone = phoneInput.value.trim();
+        const provider = providerSelect.value;
+
+        if (!phone || !provider) {
+          paymentMessage.textContent = 'Please enter your phone number and select a provider.';
+          return;
+        }
+
+        paymentMessage.textContent = `Mobile payment initiated for ${phone} via ${provider}. Send the funds to NBC Bank Account Number 045174021837.`;
+      });
+    </script>
+      </body>
+</html>
